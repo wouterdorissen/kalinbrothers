@@ -6,7 +6,7 @@
 <title>KALIN BROTHERS · Media Kit</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@400;500;600;700&family=Meow+Script&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <!-- =========================================================
      EDIT THIS BLOCK MONTHLY · ALL NUMBERS LIVE HERE
@@ -14,6 +14,9 @@
 <script>
   window.KALIN_DATA = {
     lastUpdated: "May 2026",
+
+    // Coming-soon gate · set to true to lock the page behind a password again
+    gateEnabled: false,
 
     // Follower stats per account
     accounts: {
@@ -47,22 +50,42 @@
 
     // Selected videos to embed · add TikTok video IDs or Instagram reel/post shortcodes
     watchVideos: [
-      { platform: "tiktok",    id: "7421189374739598624", title: "Ashley × CZN Burak",    meta: "TikTok · Viral collab" },
-      { platform: "tiktok",    id: "7328029467992001824", title: "Barbershop Duet",       meta: "TikTok · 20M+ views" },
-      { platform: "tiktok",    id: "7262030220583046433", title: "Look at me, the original", meta: "TikTok · Trend origin" }
+      { platform: "tiktok",    id: "7575242231783722272", title: "Latest viral drop",       meta: "TikTok · New release" },
+      { platform: "tiktok",    id: "7421189374739598624", title: "Ashley × CZN Burak",     meta: "TikTok · Viral collab" },
+      { platform: "tiktok",    id: "7328029467992001824", title: "Barbershop Duet",        meta: "TikTok · 20M+ views" },
+      { platform: "tiktok",    id: "7262030220583046433", title: "Look at me, the original",meta: "TikTok · Trend origin" },
+      { platform: "tiktok",    id: "7438674907120045344", title: "Romanian Dance trend",   meta: "TikTok · Yali Yali era" },
+      { platform: "tiktok",    id: "7452406221849644310", title: "Brazim bruno",           meta: "TikTok · Brazil crossover" }
       // To add Instagram: { platform: "instagram", id: "REEL_SHORTCODE", title: "...", meta: "..." }
     ],
 
-    // Brand collaborations · add new ones here
+    // Creative campaigns · brand collaborations
     collabs: [
-      { brand: "AutoScarma",        type: "Automotive · Sponsored video",  link: "" },
-      { brand: "CZN Burak",         type: "Cross-collab · Ashley trend",   link: "https://www.tiktok.com/@kadirrrx24/video/7421189374739598624" }
+      { brand: "ICI PARIS XL",   type: "In-store TikTok activation",                                                  link: "" },
+      { brand: "NIVEA",          type: "Co-branded TikTok inside ICI Paris XL",                                        link: "" },
+      { brand: "PRIMARK",        type: "Kadir · Get Ready With Me campaign",                                           link: "" },
+      { brand: "VISIT ABU DHABI",type: "Travel content series · Louvre, Ferrari World, Warner Bros World",             link: "" },
+      { brand: "AutoScarma",     type: "Automotive · Sponsored video",                                                 link: "" },
+      { brand: "CZN BURAK",      type: "Cross-collab · Ashley trend",                                                  link: "https://www.tiktok.com/@kadirrrx24/video/7421189374739598624" }
+    ],
+
+    // Logos to render in the campaigns ribbon
+    // Object with `name` and optional `src` (SVG/PNG path). Fallback to typography if no src.
+    // To self-host: save logo to img/logos/<name>.svg and set src: "img/logos/nivea.svg".
+    campaignLogos: [
+      { name: "ICI Paris XL",    src: "https://commons.wikimedia.org/wiki/Special:FilePath/ICI_Paris_XL_logo.svg" },
+      { name: "Nivea",           src: null },
+      { name: "Primark",         src: "https://commons.wikimedia.org/wiki/Special:FilePath/Primark_Stores_Logo.svg" },
+      { name: "Visit Abu Dhabi", src: "https://commons.wikimedia.org/wiki/Special:FilePath/Abu_Dhabi_Logo.svg" },
+      { name: "AutoScarma",      src: null },
+      { name: "CZN Burak",       src: null }
     ],
 
     // Live & DJ performances · add credits here
     djCredits: [
-      { event: "Mosaic Festival",            location: "Presented by Kalin Brothers", year: 2025 },
-      { event: "METAMORFOZ Festival",        location: "Munich, Germany",              year: 2023 }
+      { event: "UNTOLD Festival",     location: "Main stage DJ set",            year: 2024 },
+      { event: "Mosaic Festival",     location: "Presented by Kalin Brothers",  year: 2025 },
+      { event: "METAMORFOZ Festival", location: "Munich, Germany",              year: 2023 }
     ]
   };
 </script>
@@ -77,14 +100,231 @@
     --line: rgba(245,243,238,.18);
     --line-strong: rgba(245,243,238,.36);
     --accent: #c9b27f;
-    --script: "Meow Script", "Cormorant Garamond", cursive;
+    --script: "Anton", "Helvetica Neue", sans-serif;
     --display: "Cormorant Garamond", "Times New Roman", serif;
     --body: "Inter", -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; scroll-padding-top: 70px; }
   html, body { background: var(--bg); color: var(--ink); }
   body { font-family: var(--body); font-weight: 400; line-height: 1.75; font-size: 17px; -webkit-font-smoothing: antialiased; letter-spacing: .005em; }
+
+  /* Coming-soon password gate */
+  .gate {
+    position: fixed; inset: 0; z-index: 9999;
+    background: #050505;
+    display: flex; align-items: center; justify-content: center;
+    transition: opacity .55s ease;
+  }
+  .gate-inner { text-align: center; max-width: 520px; padding: 32px; width: 100%; }
+  .gate-eyebrow {
+    font-family: var(--body); text-transform: uppercase;
+    letter-spacing: .36em; font-size: 11px; color: var(--ink-soft);
+    margin-bottom: 28px;
+  }
+  .gate-title {
+    font-family: var(--script); font-style: normal; font-weight: 400;
+    font-size: clamp(56px, 10vw, 132px); color: var(--ink);
+    margin-bottom: 22px; line-height: .95; letter-spacing: .03em;
+    text-transform: uppercase;
+  }
+  .gate-tag {
+    font-family: var(--display); font-style: italic;
+    color: var(--ink-soft); margin-bottom: 56px; font-size: 19px; line-height: 1.5;
+  }
+  .gate-form { display: flex; gap: 10px; max-width: 440px; margin: 0 auto; }
+  .gate-form input {
+    flex: 1; background: transparent;
+    border: 1px solid var(--line-strong); color: var(--ink);
+    padding: 16px 22px; font-family: var(--body); font-size: 14px;
+    letter-spacing: .08em; outline: none;
+    transition: border-color .25s ease;
+  }
+  .gate-form input::placeholder { color: var(--ink-mute); letter-spacing: .12em; }
+  .gate-form input:focus { border-color: var(--ink); }
+  .gate-form button {
+    background: var(--ink); color: var(--bg); border: 1px solid var(--ink);
+    padding: 16px 30px; font-family: var(--body); font-size: 11px;
+    letter-spacing: .28em; text-transform: uppercase; cursor: pointer;
+    transition: background .25s ease, color .25s ease;
+  }
+  .gate-form button:hover { background: transparent; color: var(--ink); }
+  .gate-error {
+    color: #d97c7c; font-size: 12px; margin-top: 18px;
+    opacity: 0; transition: opacity .25s; min-height: 18px;
+    letter-spacing: .12em;
+  }
+  .gate-error.visible { opacity: 1; }
+  .gate-request {
+    margin-top: 32px; font-family: var(--body);
+    font-size: 13px; color: var(--ink-soft);
+    letter-spacing: .04em;
+  }
+  .gate-request a {
+    color: var(--ink);
+    border-bottom: 1px solid var(--line-strong);
+    padding-bottom: 2px;
+  }
+  .gate-request a:hover { border-bottom-color: var(--ink); opacity: 1; }
+  .gate-footer {
+    margin-top: 72px; font-family: var(--body);
+    font-size: 10px; letter-spacing: .32em;
+    text-transform: uppercase; color: var(--ink-mute);
+  }
+  .gate.unlocked { opacity: 0; pointer-events: none; }
+  .shake { animation: shake .4s cubic-bezier(.36,.07,.19,.97) both; }
+  @keyframes shake {
+    10%, 90% { transform: translateX(-2px); }
+    20%, 80% { transform: translateX(4px); }
+    30%, 50%, 70% { transform: translateX(-6px); }
+    40%, 60% { transform: translateX(6px); }
+  }
+  @media (max-width: 600px) {
+    .gate-form { flex-direction: column; }
+    .gate-form button { padding: 16px; }
+  }
+
+  /* Sticky navigation */
+  .topnav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 16px 32px;
+    background: rgba(5,5,5,0); backdrop-filter: blur(0px);
+    border-bottom: 1px solid transparent;
+    transition: background .35s ease, backdrop-filter .35s ease, border-color .35s ease, padding .35s ease;
+  }
+  .topnav.scrolled {
+    background: rgba(5,5,5,.78); backdrop-filter: blur(14px);
+    border-bottom-color: var(--line);
+    padding: 12px 32px;
+  }
+  .topnav .brand {
+    font-family: var(--script); font-size: 22px; line-height: 1; color: var(--ink);
+    text-transform: uppercase; letter-spacing: .08em;
+  }
+  .topnav nav { display: flex; gap: 28px; align-items: center; }
+  .topnav nav a {
+    font-family: var(--body); font-size: 11px; font-weight: 500;
+    text-transform: uppercase; letter-spacing: .26em; color: var(--ink-soft);
+  }
+  .topnav nav a:hover { color: var(--ink); opacity: 1; }
+  @media (max-width: 820px) {
+    .topnav { padding: 12px 20px; }
+    .topnav nav { gap: 14px; overflow-x: auto; }
+    .topnav nav a { font-size: 10px; letter-spacing: .18em; white-space: nowrap; }
+    .topnav .brand { font-size: 22px; }
+  }
+
+  /* Content + photo split layout (inside sections) */
+  .split-layout {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 64px;
+    align-items: center; margin-top: 56px;
+  }
+  .split-layout.photo-right { grid-template-areas: "content photo"; }
+  .split-layout.photo-left  { grid-template-areas: "photo content"; }
+  .split-layout > .content {
+    grid-area: content;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .split-layout > .photo   { grid-area: photo; }
+  .split-photo {
+    display: block;
+    width: 100%; max-width: 460px;
+    aspect-ratio: 4 / 5;
+    object-fit: cover; object-position: center 30%;
+    border: 1px solid var(--line);
+    filter: saturate(0.94) contrast(1.04);
+  }
+  .split-layout.photo-right .split-photo,
+  .split-layout.photo-right .dj-video { margin-left: auto; margin-right: 0; }
+  .split-layout.photo-left  .split-photo,
+  .split-layout.photo-left  .dj-video { margin-right: auto; margin-left: 0; }
+  @media (max-width: 820px) {
+    .split-layout { grid-template-columns: 1fr; gap: 40px; }
+    .split-layout.photo-right, .split-layout.photo-left { grid-template-areas: "photo" "content"; }
+    .split-photo { aspect-ratio: 4 / 3; max-width: 100%; }
+    .split-layout.photo-right .split-photo,
+    .split-layout.photo-left .split-photo { margin: 0 auto; }
+  }
+
+  /* DJ video hero (background autoplay) */
+  .dj-hero {
+    position: relative; width: 100%;
+    aspect-ratio: 16 / 9; min-height: 460px; max-height: 820px;
+    overflow: hidden; background: #050505;
+    margin-top: 56px; border: 1px solid var(--line);
+  }
+  .dj-bg {
+    position: absolute; inset: 0; pointer-events: none;
+    overflow: hidden;
+  }
+  .dj-bg iframe {
+    position: absolute; top: 50%; left: 50%;
+    width: 177.78vh; height: 56.25vw;
+    min-width: 100%; min-height: 100%;
+    transform: translate(-50%, -50%);
+    border: 0;
+  }
+  .dj-overlay {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 56px;
+    background: linear-gradient(to bottom, rgba(5,5,5,.35) 0%, rgba(5,5,5,.05) 35%, rgba(5,5,5,.55) 100%);
+    transition: opacity .45s ease;
+    pointer-events: none;
+  }
+  .dj-hero.sound-on .dj-overlay { opacity: 0; }
+  .dj-overlay .body {
+    color: var(--ink); max-width: 580px;
+    text-shadow: 0 1px 16px rgba(0,0,0,.65);
+  }
+  .dj-sound {
+    position: absolute; bottom: 24px; right: 24px;
+    background: rgba(5,5,5,.55); backdrop-filter: blur(6px);
+    border: 1px solid rgba(245,243,238,.32); color: var(--ink);
+    padding: 12px 22px; font-family: var(--body);
+    font-size: 11px; letter-spacing: .28em; text-transform: uppercase;
+    cursor: pointer; opacity: 0;
+    transition: opacity .45s ease, background .25s ease;
+    z-index: 5;
+  }
+  .dj-hero:hover .dj-sound,
+  .dj-hero.sound-on .dj-sound { opacity: 1; }
+  .dj-sound:hover { background: var(--ink); color: var(--bg); }
+  @media (max-width: 820px) {
+    .dj-hero { aspect-ratio: 4 / 5; }
+    .dj-overlay { padding: 32px; }
+    .dj-sound { bottom: 16px; right: 16px; padding: 10px 16px; font-size: 10px; }
+  }
+
+  /* Logo strip (Creative Campaigns) */
+  .logo-strip {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1px; background: var(--line);
+    border: 1px solid var(--line);
+    margin-top: 56px;
+  }
+  .logo-cell {
+    background: var(--bg); padding: 48px 24px;
+    display: flex; align-items: center; justify-content: center;
+    min-height: 140px; text-align: center;
+    font-family: var(--body); font-weight: 600;
+    font-size: clamp(14px, 1.4vw, 18px);
+    letter-spacing: .22em; text-transform: uppercase;
+    color: var(--ink);
+    transition: background .25s ease;
+  }
+  .logo-cell img {
+    max-height: 44px; max-width: 80%; width: auto; height: auto;
+    filter: brightness(0) invert(1);
+    opacity: .85; transition: opacity .25s ease;
+  }
+  .logo-cell:hover { background: #0d0d0d; }
+  .logo-cell:hover img { opacity: 1; }
+  @media (max-width: 820px) {
+    .logo-strip { grid-template-columns: repeat(2, 1fr); }
+  }
   a { color: inherit; text-decoration: none; transition: opacity .25s ease; }
   a:hover { opacity: .65; }
   img { max-width: 100%; display: block; }
@@ -103,8 +343,8 @@
   }
   .display {
     font-family: var(--script); font-style: normal; font-weight: 400;
-    font-size: clamp(96px, 14vw, 200px); letter-spacing: 0; line-height: 1;
-    color: var(--ink);
+    font-size: clamp(72px, 11vw, 168px); letter-spacing: .02em; line-height: .95;
+    color: var(--ink); text-transform: uppercase;
   }
   .h-xl { font-size: clamp(46px, 5.2vw, 78px); font-style: italic; }
   .h-l  { font-size: clamp(34px, 3.6vw, 54px); font-style: italic; }
@@ -242,16 +482,55 @@
     font-family: var(--display); font-style: italic; font-size: 17px;
   }
 
-  /* Contact card */
+  /* Contact card · statement layout */
   .contact {
-    border: 1px solid var(--line-strong); padding: 64px 48px;
-    display: grid; grid-template-columns: 1fr 1fr; gap: 56px;
-    margin-top: 56px; background: var(--bg-soft);
+    border-top: 2px solid var(--ink);
+    border-bottom: 2px solid var(--ink);
+    padding: 88px 64px;
+    display: grid; grid-template-columns: 1.2fr 1fr; gap: 80px;
+    margin-top: 64px; background: var(--bg-soft);
+    position: relative;
   }
-  .contact .h-l { margin-bottom: 28px; }
-  .contact-info p { margin-bottom: 14px; font-size: 16px; }
-  .contact-info .micro { display: block; margin-bottom: 4px; }
-  .contact-name { font-family: var(--display); font-size: 28px; }
+  .contact::before, .contact::after {
+    content: ""; position: absolute; left: 64px; right: 64px;
+    height: 1px; background: var(--line);
+  }
+  .contact::before { top: 22px; }
+  .contact::after  { bottom: 22px; }
+  .contact .h-xl { margin-bottom: 24px; font-style: italic; }
+  .contact-info p {
+    margin-bottom: 22px; font-size: 17px;
+    display: flex; flex-direction: column; gap: 4px;
+  }
+  .contact-info p:last-child { margin-bottom: 0; }
+  .contact-info .micro { display: block; }
+  .contact-info a { border-bottom: 1px solid var(--line); padding-bottom: 2px; }
+  .contact-info a:hover { border-bottom-color: var(--ink); opacity: 1; }
+  .contact-name {
+    font-family: var(--display); font-style: italic; font-weight: 400;
+    font-size: 32px; line-height: 1.15; color: var(--ink);
+    letter-spacing: -.005em;
+  }
+
+  /* WhatsApp CTA */
+  .whatsapp-btn {
+    display: inline-flex; align-items: center; gap: 12px;
+    background: var(--ink); color: var(--bg);
+    border: 1px solid var(--ink);
+    padding: 18px 30px;
+    font-family: var(--body); font-size: 11px; font-weight: 600;
+    letter-spacing: .3em; text-transform: uppercase;
+    margin-top: 36px; cursor: pointer;
+    transition: background .25s ease, color .25s ease;
+  }
+  .whatsapp-btn:hover { background: transparent; color: var(--ink); opacity: 1; }
+  .whatsapp-btn svg { width: 18px; height: 18px; flex-shrink: 0; }
+  .whatsapp-btn:hover svg path { fill: var(--ink); }
+  @media (max-width: 820px) {
+    .contact { padding: 56px 28px; gap: 40px; }
+    .contact::before, .contact::after { left: 28px; right: 28px; }
+    .contact-name { font-size: 44px; }
+  }
 
   /* Footer */
   footer { padding: 48px 0 64px; }
@@ -296,8 +575,74 @@
 </head>
 <body>
 
+<!-- ========================= COMING-SOON GATE ========================= -->
+<div id="gate" class="gate">
+  <div class="gate-inner">
+    <div class="gate-eyebrow">Coming Soon</div>
+    <h1 class="gate-title">Kalin Brothers</h1>
+    <div class="gate-tag">Media kit · access by invitation</div>
+    <form class="gate-form" id="gate-form" autocomplete="off">
+      <input type="password" id="gate-input" placeholder="Enter password" autocomplete="new-password" autofocus>
+      <button type="submit">Enter</button>
+    </form>
+    <div class="gate-error" id="gate-error">Incorrect. Try again.</div>
+    <div class="gate-request">Request access via <a href="mailto:hello@wouterdorissen.com">hello@wouterdorissen.com</a></div>
+    <div class="gate-footer">© Kalin Brothers</div>
+  </div>
+</div>
+<script>
+(function(){
+  var gate = document.getElementById('gate');
+  if (!gate) return;
+  if (window.KALIN_DATA && window.KALIN_DATA.gateEnabled === false) {
+    gate.style.display = 'none';
+    return;
+  }
+  try {
+    if (localStorage.getItem('kalin_unlocked') === '1') {
+      gate.style.display = 'none';
+      return;
+    }
+  } catch(e){}
+  document.documentElement.style.overflow = 'hidden';
+  var form = document.getElementById('gate-form');
+  var input = document.getElementById('gate-input');
+  var err = document.getElementById('gate-error');
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var v = (input.value || '').trim().toLowerCase();
+    if (v === 'kalinbros') {
+      try { localStorage.setItem('kalin_unlocked', '1'); } catch(e){}
+      gate.classList.add('unlocked');
+      document.documentElement.style.overflow = '';
+      setTimeout(function(){ gate.style.display = 'none'; }, 600);
+    } else {
+      err.classList.add('visible');
+      input.value = '';
+      input.classList.remove('shake');
+      void input.offsetWidth;
+      input.classList.add('shake');
+      input.focus();
+    }
+  });
+})();
+</script>
+
+<!-- ========================= STICKY NAV ========================= -->
+<div class="topnav" id="topnav">
+  <a href="#top" class="brand">Kalin Brothers</a>
+  <nav>
+    <a href="#reach">Reach</a>
+    <a href="#viral">Viral</a>
+    <a href="#audience">Audience</a>
+    <a href="#campaigns">Campaigns</a>
+    <a href="#dj">DJ</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</div>
+
 <!-- ========================= COVER ========================= -->
-<header class="cover">
+<header class="cover" id="top">
   <div class="cover-top">
     <div class="micro">Media Kit · <span id="cover-date"></span></div>
     <div class="micro">For internal & partnership use</div>
@@ -325,15 +670,14 @@
 <section>
   <div class="wrap">
     <div class="eyebrow">01 · The Duo</div>
-    <div class="two-col">
-      <div class="label-side">
-        <h2 class="h-xl">Two brothers.<br>One unmistakable rhythm.</h2>
+    <h2 class="h-xl">Two brothers.<br>One unmistakable rhythm.</h2>
+
+    <div class="split-layout photo-right">
+      <div class="content">
+        <p class="body">A Belgian-Turkish dance duo, born and raised in Belgium with roots in Erzincan. Brothers, not twins. Four years apart, one unmistakable rhythm.</p>
+        <p class="body" style="margin-top: 18px;">The breakthrough came overnight in 2020, when Kadir filmed Berdan dancing at a family gathering and posted it to TikTok without telling him. What began in a small bathroom and a family living room is now a global audience of millions, across seven accounts on TikTok, Instagram, YouTube and Snapchat.</p>
       </div>
-      <div>
-        <p class="body">Berdan and Kadir Kalin are a Belgian-Turkish dance duo, born and raised in Belgium with roots in Erzincan. Brothers, not twins. A four-year age gap, and one unmistakable rhythm.</p>
-        <p class="body">Their breakthrough came in 2020. During the pandemic Kadir filmed Berdan dancing at a family gathering and posted it to TikTok without telling him. The video went viral overnight. What began in a small bathroom and a family living room turned into a global audience of millions, with viral trends that travel far beyond their core community.</p>
-        <p class="body">Today they work across seven accounts on TikTok, Instagram, YouTube and Snapchat, with a combined reach in the upper tier of European creator talent. A duo that brands and venues bring in to create moments people re-share, remix and remember.</p>
-      </div>
+      <img class="split-photo photo" src="img/kalin-brothers-photo-9.jpg" alt="Kalin Brothers portrait">
     </div>
 
     <div class="video-frame">
@@ -349,10 +693,10 @@
 </section>
 
 <!-- ========================= REACH ========================= -->
-<section>
+<section id="reach">
   <div class="wrap">
     <div class="eyebrow">02 · Reach</div>
-    <h2 class="h-xl">The numbers, simply.</h2>
+    <h2 class="h-xl">Numbers don&apos;t lie.</h2>
     <p class="lead">Verified <span id="last-updated-inline"></span>. Values mirror public profile counts on each platform.</p>
 
     <div class="stat-grid">
@@ -383,10 +727,10 @@
 </section>
 
 <!-- ========================= VIRAL MOMENTS ========================= -->
-<section>
+<section id="viral">
   <div class="wrap">
     <div class="eyebrow">03 · Viral Moments</div>
-    <h2 class="h-xl">Three different formats.<br><em style="font-family: var(--display); font-style: italic; color: var(--ink-soft);">Three times in the viral zone.</em></h2>
+    <h2 class="h-xl"><em style="font-family: var(--display); font-style: italic;">Viral as a service.</em></h2>
     <p class="body" style="margin-top: 28px;">A single viral hit is luck. Three across different formats (a trend, a destination video, a duet) is signal. The brothers have demonstrated the ability to land in the cultural feed across distinct content frames.</p>
 
     <div class="viral-grid" id="viral-grid"></div>
@@ -396,38 +740,26 @@
   </div>
 </section>
 
-<!-- ========================= TRENDS ========================= -->
-<section>
+<!-- ========================= AUDIENCE ========================= -->
+<section id="audience">
   <div class="wrap">
-    <div class="eyebrow">04 · Trends They Started</div>
-    <div class="two-col">
-      <div class="label-side"><h2 class="h-xl">Originators,<br>not amplifiers.</h2></div>
-      <div>
-        <p class="body"><strong style="font-family: var(--display); font-size: 22px; color: var(--ink);">"Ashley, look at me"</strong><br>
-        Their interpretation of the &ldquo;Look at me&rdquo; meme became one of Instagram&apos;s most-replicated trends of the decade, peaking at 155M views and pulling in collabs from international names including chef CZN Burak.</p>
-        <p class="body" style="margin-top: 32px;"><strong style="font-family: var(--display); font-size: 22px; color: var(--ink);">&ldquo;Yali Yali&rdquo;</strong><br>
-        Their dance to the Romanian track Yali Yali helped re-launch the song into the European TikTok sphere and into the Balkan and MENA diaspora communities. A textbook case of breaking a track into new markets.</p>
-        <p class="body" style="margin-top: 32px;"><strong style="font-family: var(--display); font-size: 22px; color: var(--ink);">Barbershop Duet</strong><br>
-        The first format that crossed the 20M-view line on TikTok, and the format other creators still recreate. The recognisable visual: two brothers, mirror choreography, tight cuts.</p>
+    <div class="eyebrow">04 · Target Audience</div>
+
+    <div class="split-layout photo-left">
+      <img class="split-photo photo" src="img/kalin-brothers-photo-17.jpg" alt="Kalin Brothers editorial">
+      <div class="content">
+        <h2 class="h-xl">The world is our audience.</h2>
+        <p class="body" style="margin-top: 24px;">Their audience clusters around five geographic anchor markets. Strong native presence in Belgium and the Netherlands, deep penetration into the global Turkish diaspora, and a fast-growing footprint across the wider Middle East &amp; North Africa region. Demographic indicators below are based on aggregated public-profile signals and self-reported analytics.</p>
       </div>
     </div>
-  </div>
-</section>
-
-<!-- ========================= AUDIENCE ========================= -->
-<section>
-  <div class="wrap">
-    <div class="eyebrow">05 · Audience</div>
-    <h2 class="h-xl">Who is watching.</h2>
-    <p class="body" style="margin-top: 24px;">Their audience clusters around five geographic anchor markets. Strong native presence in Belgium and the Netherlands, deep penetration into the global Turkish diaspora, and a fast-growing footprint across the wider Middle East &amp; North Africa region.</p>
 
     <div class="audience-grid">
       <div class="aud">
-        <div class="label">Gender split</div>
+        <div class="label">Gender split (indicative)</div>
         <div class="value" id="aud-gender"></div>
       </div>
       <div class="aud">
-        <div class="label">Age</div>
+        <div class="label">Age (indicative)</div>
         <div class="value" id="aud-age"></div>
       </div>
       <div class="aud">
@@ -438,43 +770,61 @@
   </div>
 </section>
 
-<!-- ========================= COLLABS ========================= -->
-<section>
+<!-- ========================= CREATIVE CAMPAIGNS ========================= -->
+<section id="campaigns">
   <div class="wrap">
-    <div class="eyebrow">06 · Brand Collaborations</div>
-    <h2 class="h-xl">Selected work.</h2>
+    <div class="eyebrow">05 · Creative Campaigns</div>
+    <h2 class="h-xl">Creative campaigns.</h2>
     <p class="body" style="margin-top: 24px;">Partnerships that have run alongside the organic feed, used as proof of execution and reach delivery.</p>
+
+    <div class="logo-strip" id="logo-strip"></div>
+
     <div class="rows" id="collabs-rows"></div>
   </div>
 </section>
 
 <!-- ========================= DJ / LIVE ========================= -->
-<section>
+<section id="dj">
   <div class="wrap">
-    <div class="eyebrow">07 · Live &amp; DJ</div>
-    <div class="two-col">
-      <div class="label-side"><h2 class="h-xl">Stages &amp; sets.</h2></div>
-      <div>
+    <div class="eyebrow">06 · Kalin Brothers DJ-Duo</div>
+    <h2 class="h-xl">Kalin Brothers DJ-Duo.</h2>
+
+    <div class="dj-hero" id="dj-hero">
+      <div class="dj-bg">
+        <iframe id="dj-vimeo"
+                src="https://player.vimeo.com/video/1193373764?h=3a2df4fca6&background=1&autoplay=1&loop=1&muted=1&autopause=0"
+                allow="autoplay; fullscreen; picture-in-picture"
+                allowfullscreen></iframe>
+      </div>
+      <div class="dj-overlay">
         <p class="body">The brothers extend their on-screen energy into live performances, combining their signature dance presence with DJ sets that meet the audience the music originally came from. The natural booking is a hybrid moment: a performance plus a set, designed to be the festival or club&apos;s most-shareable hour.</p>
       </div>
+      <button class="dj-sound" id="dj-sound" type="button">Sound · Off</button>
     </div>
+
     <div class="rows" id="dj-rows"></div>
   </div>
 </section>
 
 <!-- ========================= CONTACT ========================= -->
-<section>
+<section id="contact">
   <div class="wrap">
-    <div class="eyebrow">08 · Bookings &amp; Collaborations</div>
+    <div class="eyebrow">07 · Bookings &amp; Collaborations</div>
     <div class="contact">
       <div>
-        <h2 class="h-l">Let&apos;s build something<br>worth remembering.</h2>
-        <p class="body" style="margin-top: 12px;">For brand partnerships, festivals, club bookings, content collaborations and licensing requests.</p>
+        <h2 class="h-xl">Let&apos;s build something<br>worth remembering.</h2>
+        <p class="body">For brand partnerships, festivals, club bookings, content collaborations and licensing requests.</p>
       </div>
       <div class="contact-info">
         <p><span class="micro">Management</span><span class="contact-name">Wouter Dorissen</span></p>
-        <p><span class="micro">Phone</span>+32 498 677 359</p>
+        <p><span class="micro">Phone</span><a href="tel:+32498677359">+32 498 677 359</a></p>
         <p><span class="micro">Email</span><a href="mailto:hello@wouterdorissen.com">hello@wouterdorissen.com</a></p>
+        <a class="whatsapp-btn" href="https://wa.me/32498677359" target="_blank" rel="noopener">
+          <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path fill="currentColor" d="M16.001 2.667c-7.364 0-13.334 5.97-13.334 13.333 0 2.354.62 4.65 1.797 6.677L2.667 29.333l6.852-1.79a13.27 13.27 0 0 0 6.483 1.679h.005c7.364 0 13.334-5.97 13.334-13.334 0-3.563-1.388-6.91-3.908-9.43A13.247 13.247 0 0 0 16.001 2.667zm0 24.43h-.004a11.07 11.07 0 0 1-5.642-1.547l-.404-.24-4.071 1.064 1.088-3.972-.263-.418a11.066 11.066 0 0 1-1.696-5.905c.002-6.118 4.98-11.094 11.097-11.094 2.96 0 5.745 1.155 7.84 3.252a11.012 11.012 0 0 1 3.252 7.846c-.002 6.118-4.98 11.094-11.097 11.094zm6.084-8.31c-.333-.166-1.972-.972-2.276-1.083-.305-.111-.527-.166-.749.167s-.86 1.083-1.054 1.305c-.194.222-.388.25-.722.083-.333-.166-1.407-.518-2.681-1.654-.991-.884-1.66-1.976-1.854-2.31-.194-.333-.021-.513.146-.679.15-.149.333-.388.5-.583.166-.194.222-.333.333-.555.111-.222.056-.417-.028-.583-.083-.167-.749-1.806-1.027-2.473-.27-.65-.545-.562-.75-.573l-.638-.011a1.23 1.23 0 0 0-.89.417c-.305.333-1.166 1.139-1.166 2.778s1.194 3.222 1.36 3.444c.166.222 2.349 3.583 5.685 5.025.795.343 1.415.548 1.899.701.798.254 1.524.218 2.099.132.64-.096 1.972-.806 2.25-1.583.278-.778.278-1.444.194-1.583-.084-.139-.305-.222-.638-.389z"/>
+          </svg>
+          <span>WhatsApp me</span>
+        </a>
       </div>
     </div>
   </div>
@@ -567,6 +917,65 @@
   document.getElementById("aud-gender").textContent = d.audience.genderSplit;
   document.getElementById("aud-age").textContent    = d.audience.ageBracket;
   document.getElementById("aud-markets").innerHTML  = d.audience.topMarkets.map(m => `<li>${m}</li>`).join("");
+
+  // Logo strip (Creative Campaigns) · supports string or { name, src }
+  const logoEl = document.getElementById("logo-strip");
+  if (logoEl && d.campaignLogos) {
+    logoEl.innerHTML = d.campaignLogos.map(l => {
+      if (l && typeof l === "object") {
+        if (l.src) {
+          return `<div class="logo-cell"><img src="${l.src}" alt="${l.name}" loading="lazy" onerror="this.parentNode.textContent='${l.name.toUpperCase()}'"></div>`;
+        }
+        return `<div class="logo-cell">${l.name.toUpperCase()}</div>`;
+      }
+      return `<div class="logo-cell">${String(l).toUpperCase()}</div>`;
+    }).join("");
+  }
+
+  // DJ video sound toggle
+  (function initDjSound() {
+    var hero = document.getElementById("dj-hero");
+    var btn  = document.getElementById("dj-sound");
+    var iframe = document.getElementById("dj-vimeo");
+    if (!hero || !btn || !iframe) return;
+    function attachPlayer() {
+      if (!window.Vimeo || !window.Vimeo.Player) return;
+      var player = new Vimeo.Player(iframe);
+      var on = false;
+      player.setVolume(0).catch(function(){});
+      btn.addEventListener("click", function(e) {
+        e.preventDefault();
+        on = !on;
+        hero.classList.toggle("sound-on", on);
+        Promise.all([
+          player.setMuted(!on).catch(function(){}),
+          player.setVolume(on ? 1 : 0).catch(function(){})
+        ]).then(function() {
+          btn.textContent = on ? "Sound · On" : "Sound · Off";
+        });
+      });
+    }
+    if (window.Vimeo && window.Vimeo.Player) {
+      attachPlayer();
+    } else {
+      var s = document.createElement("script");
+      s.src = "https://player.vimeo.com/api/player.js";
+      s.async = true;
+      s.onload = attachPlayer;
+      document.head.appendChild(s);
+    }
+  })();
+
+  // Sticky nav scroll detection
+  const nav = document.getElementById("topnav");
+  if (nav) {
+    const onScroll = () => {
+      if (window.scrollY > 60) nav.classList.add("scrolled");
+      else nav.classList.remove("scrolled");
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+  }
 
   // Collabs
   const collabsEl = document.getElementById("collabs-rows");
