@@ -50,10 +50,10 @@
 
     // Selected videos to embed · add TikTok video IDs or Instagram reel/post shortcodes
     watchVideos: [
-      { platform: "tiktok", id: "7625713939761958176", title: "Selected drop",      meta: "TikTok · Featured" },
-      { platform: "tiktok", id: "7043523346704698629", title: "Signature moment",   meta: "TikTok · Classic" },
-      { platform: "tiktok", id: "7631904890125667616", title: "Cold Culture",       meta: "TikTok · Brand campaign" }
-      // 4th video to be added · IDs to come from Kadir
+      { platform: "tiktok", id: "7575242231783722272", title: "Latest release",      meta: "TikTok · Featured" },
+      { platform: "tiktok", id: "7625713939761958176", title: "Selected moment",     meta: "TikTok · Featured" },
+      { platform: "tiktok", id: "7325911295549558048", title: "Signature trend",     meta: "TikTok · Featured" },
+      { platform: "tiktok", id: "7043523346704698629", title: "Classic Kalin",       meta: "TikTok · Featured" }
       // To add Instagram: { platform: "instagram", id: "REEL_SHORTCODE", title: "...", meta: "..." }
     ],
 
@@ -356,15 +356,14 @@
     min-height: 100vh; display: flex; flex-direction: column; justify-content: space-between;
     padding: 56px 48px; position: relative;
     background:
-      linear-gradient(180deg, rgba(5,5,5,.55) 0%, rgba(5,5,5,.15) 22%, rgba(5,5,5,.35) 65%, rgba(5,5,5,.92) 100%),
-      url('img/hero.jpg') center 30% / cover no-repeat,
-      radial-gradient(ellipse at 50% 110%, rgba(247,245,240,.04), transparent 60%),
+      linear-gradient(180deg, rgba(5,5,5,.30) 0%, rgba(5,5,5,.05) 30%, rgba(5,5,5,.25) 70%, rgba(5,5,5,.85) 100%),
+      url('img/hero.jpg') center 35% / cover no-repeat,
       linear-gradient(180deg, #050505, #0a0a0a 60%, #050505);
     border-bottom: 1px solid var(--line);
   }
   .cover::after {
     content: ""; position: absolute; inset: 0; pointer-events: none;
-    box-shadow: inset 0 0 220px 80px rgba(0,0,0,.55);
+    box-shadow: inset 0 0 200px 60px rgba(0,0,0,.35);
   }
   .cover > * { position: relative; z-index: 1; }
   .cover-top { display: flex; justify-content: space-between; align-items: center; }
@@ -435,9 +434,10 @@
 
   /* Watch grid (TikTok / Instagram) */
   .watch-grid {
-    display: grid; grid-template-columns: repeat(3, 1fr);
-    gap: 24px; margin-top: 56px;
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 20px; margin-top: 56px;
   }
+  @media (max-width: 1100px) { .watch-grid { grid-template-columns: repeat(2, 1fr); gap: 28px; } }
   .watch-tile {
     position: relative; aspect-ratio: 9 / 16;
     border: 1px solid var(--line); overflow: hidden;
